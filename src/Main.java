@@ -1,26 +1,27 @@
-import java.util.Random;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        for (int i = 0; i < 5; i++) {
-            int age = generateRandomAge();
-            int temperature = generateRandomTemperature();
-            String result = canGoOutside(age, temperature);
-            System.out.println("Возраст: " + age + " лет, Температура: " + temperature + " градусов - " + result);
+        double[] numbers = {8.0, -2.0, -4.0, 2.0, 3.0, 6.0, -7.0, 1.0, 5.0, -3.0, 0.0, 9.0, -1.0, 4.0, 7.0};
+
+        int firstNegativeIndex = -1;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] < 0) {
+                firstNegativeIndex = i;
+                break;
+            }
         }
-    }
 
-    public static int generateRandomAge() {
-        return new Random().nextInt(76) + 5;
-    }
+        double average = Arrays.stream(numbers)
+                .skip(firstNegativeIndex + 1)
+                .filter(num -> num > 0)
+                .average()
+                .orElse(0);
 
-    public static int generateRandomTemperature() {
-        return new Random().nextInt(51) - 20;
-    }
+        System.out.println("Среднее арифметическое положительных чисел после первого отрицательного: " + average);
 
-    public static String canGoOutside(int age, int temperature) {
-        return (age >= 20 && age <= 45 && temperature >= -20 && temperature <= 30) ||
-                (age < 20 && temperature >= 0 && temperature <= 28) ||
-                (age > 45 && temperature >= -10 && temperature <= 25) ? "Можно идти гулять" : "Оставайтесь дома";
+        Arrays.sort(numbers, firstNegativeIndex + 1, numbers.length);
+
+        System.out.println("Текущее состояние массива после сортировки: " + Arrays.toString(numbers));
     }
 }
