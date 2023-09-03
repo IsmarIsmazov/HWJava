@@ -1,24 +1,26 @@
-import java.util.Scanner;
+import java.util.Random;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        String firstWord;
-        final int NUM = 0;
-        String word = "WORD";
-        firstWord = NUM + word;
-        System.out.println(firstWord);
-        if (NUM < 0) {
-            System.out.println("Вы сохранили отрицательное число");
-        } else if (NUM > 0) {
-            System.out.println("Вы сохранили положительное число");
-        } else {
-            System.out.println("Вы сохранили ноль");
+        for (int i = 0; i < 5; i++) {
+            int age = generateRandomAge();
+            int temperature = generateRandomTemperature();
+            String result = canGoOutside(age, temperature);
+            System.out.println("Возраст: " + age + " лет, Температура: " + temperature + " градусов - " + result);
         }
-        System.out.print("Введите ваше имя: ");
-        String name = scan.nextLine();
-        System.out.println("Привет, " + name + "!");
+    }
+
+    public static int generateRandomAge() {
+        return new Random().nextInt(76) + 5;
+    }
+
+    public static int generateRandomTemperature() {
+        return new Random().nextInt(51) - 20;
+    }
+
+    public static String canGoOutside(int age, int temperature) {
+        return (age >= 20 && age <= 45 && temperature >= -20 && temperature <= 30) ||
+                (age < 20 && temperature >= 0 && temperature <= 28) ||
+                (age > 45 && temperature >= -10 && temperature <= 25) ? "Можно идти гулять" : "Оставайтесь дома";
     }
 }
